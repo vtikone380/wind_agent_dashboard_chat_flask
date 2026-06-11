@@ -9,7 +9,7 @@ def calculate_turbine_status(wind_speed, generator_temp, vibration, power_kw):
     alerts = []
     score = 100
 
-    if wind_speed < 3.5:
+    if wind_speed < 3.4:
         alerts.append("Low wind speed: power generation will be low.")
         score -= 15
     elif wind_speed > 20:
