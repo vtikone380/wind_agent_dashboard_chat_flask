@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <h1>{{ app_name }}</h1>
+            <p>Enter live turbine values and check health status instantly.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card form-card">
+                <h2>Input Values</h2>
+                <form method="POST">
+                    <label>Wind Speed (m/s)</label>
+                    <input type="number" step="0.1" name="wind_speed" required value="{{ input_values.wind_speed }}" placeholder="Example: 8.5">
+
+                    <label>Generator Temperature (°C)</label>
+                    <input type="number" step="0.1" name="generator_temp" required value="{{ input_values.generator_temp }}" placeholder="Example: 75">
+
+                    <label>Vibration (mm/s)</label>
+                    <input type="number" step="0.1" name="vibration" required value="{{ input_values.vibration }}" placeholder="Example: 3.2">
+
+                    <label>Power Output (kW)</label>
+                    <input type="number" step="0.1" name="power_kw" required value="{{ input_values.power_kw }}" placeholder="Example: 950">
+
+                    <button type="submit">Check Turbine Health</button>
+                </form>
+            </div>
+
+            <div class="card result-card">
+                <h2>Result</h2>
+                {% if result %}
+                    <div class="status {{ result.color }}">
+                        {{ result.status }}
+                    </div>
+                    <div class="score-box">
+                        Health Score: <strong>{{ result.score }}/100</strong>
+                    </div>
+                    <h3>Observations</h3>
+                    <ul>
+                        {% for alert in result.alerts %}
+                            <li>{{ alert }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="empty">Result will appear here after you submit values.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Demo project for Flask + GitHub + Azure App Service deployment.</p>
+        </div>
+    </div>
+</body>
+</html>
